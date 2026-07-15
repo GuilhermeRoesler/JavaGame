@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -16,10 +17,12 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenHeight = tileSize * maxScreenRow;
 
     int FPS = 60;
+    int frameNum = 0;
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, keyH);
+    ArrayList<Enemy> enemies = new ArrayList<>();
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -60,7 +63,16 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+        if (frameNum % 60 == 0) {
+            enemies.add(new Enemy(this, player));
+        }
+
         player.update();
+        for (Enemy enemy : enemies) {
+            enemy.update();
+        }
+
+        frameNum++;
     }
 
     public void paintComponent(Graphics g) {
@@ -68,6 +80,9 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;
 
         player.draw(g2);
+        for (Enemy enemy : enemies) {
+            enemy.draw(g2);
+        }
 
         g2.dispose();
     }

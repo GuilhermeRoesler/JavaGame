@@ -13,8 +13,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        x = 100;
-        y = 100;
+        x = gp.screenWidth / 10 * 8;
+        y = gp.screenHeight / 2 - gp.tileSize / 2;
         speed = 4;
     }
 
@@ -24,12 +24,6 @@ public class Player extends Entity {
         }
         else if (keyH.downPressed) {
             y += speed;
-        }
-        else if (keyH.rightPressed) {
-            x += speed;
-        }
-        else if (keyH.leftPressed) {
-            x -= speed;
         }
     }
 
