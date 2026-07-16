@@ -20,9 +20,17 @@ public class Player extends Entity {
 
     public void update() {
         if (keyH.upPressed) {
+            if (y <= 0) {
+                y = 0;
+                return;
+            }
             y -= speed;
         }
         else if (keyH.downPressed) {
+            if (y >= gp.screenHeight - gp.tileSize) {
+                y = gp.screenHeight - gp.tileSize;
+                return;
+            }
             y += speed;
         }
     }
