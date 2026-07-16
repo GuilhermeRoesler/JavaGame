@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     int FPS = 60;
     int frameNum = 0;
+    int score = 0;
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
@@ -83,6 +85,10 @@ public class GamePanel extends JPanel implements Runnable {
         for (Enemy enemy : enemies) {
             enemy.draw(g2);
         }
+
+        g2.setFont(new Font("Arial", Font.BOLD, 24));
+        g2.setColor(Color.WHITE);
+        g2.drawString("Score: " + score, 20, 40);
 
         g2.dispose();
     }
