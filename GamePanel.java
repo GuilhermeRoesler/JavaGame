@@ -21,6 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     int frameNum = 0;
     int score = 0;
     boolean gameOver = false;
+    int enemySpawnRate = Constants.INITIAL_ENEMY_SPAWN_RATE;
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
@@ -71,8 +72,11 @@ public class GamePanel extends JPanel implements Runnable {
             return;
         }
 
-        if (frameNum % 60 == 0) {
+        if (frameNum % enemySpawnRate == 0) {
             enemies.add(new Enemy(this, player));
+            if (enemySpawnRate > 10) {
+                enemySpawnRate--;
+            }
         }
 
         player.update();
