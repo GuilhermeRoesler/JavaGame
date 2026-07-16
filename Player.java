@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
-    BufferedImage image, car1, car2, car3;
+    BufferedImage image;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -20,9 +20,7 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
         try {
-            car1 = ImageIO.read(new File(Constants.IMG_PATH + "carrinho_sprites_1.png"));
-            car2 = ImageIO.read(new File(Constants.IMG_PATH + "carrinho_sprites_2.png"));
-            car3 = ImageIO.read(new File(Constants.IMG_PATH + "carrinho_sprites_3.png"));
+            image = ImageIO.read(new File(Constants.IMG_PATH + "car1.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,12 +32,10 @@ public class Player extends Entity {
         x = gp.screenWidth / 10 * 8;
         y = gp.screenHeight / 2 - height / 2;
         speed = 4;
-        image = car1;
     }
 
     public void update() {
         handleMove();
-        updateSprite();
     }
 
     public void draw(Graphics2D g2) {
@@ -61,18 +57,6 @@ public class Player extends Entity {
                 return;
             }
             y += speed;
-        }
-    }
-
-    public void updateSprite() {
-        if (gp.frameNum % 10 == 0) {
-            if (image == car1) {
-                image = car2;
-            } else if (image == car2) {
-                image = car3;
-            } else if (image == car3) {
-                image = car1;
-            }
         }
     }
 }
