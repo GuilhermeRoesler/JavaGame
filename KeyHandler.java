@@ -14,11 +14,17 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_W) {
             upPressed = true;
         }
-        if (code == KeyEvent.VK_S) {
+        else if (code == KeyEvent.VK_S) {
+            downPressed = true;
+        }
+        else if (code == KeyEvent.VK_UP) {
+            upPressed = true;
+        }
+        else if (code == KeyEvent.VK_DOWN) {
             downPressed = true;
         }
     }
-
+    
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
@@ -27,6 +33,12 @@ public class KeyHandler implements KeyListener {
             upPressed = false;
         }
         else if (code == KeyEvent.VK_S) {
+            downPressed = false;
+        }
+        else if (code == KeyEvent.VK_UP) {
+            upPressed = false;
+        }
+        else if (code == KeyEvent.VK_DOWN) {
             downPressed = false;
         }
     }
