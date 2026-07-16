@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
-    BufferedImage image;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -17,6 +16,7 @@ public class Player extends Entity {
 
         setDefaultValues();
         getPlayerImage();
+        image = car1;
     }
 
     public void setDefaultValues() {
@@ -27,7 +27,9 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
         try {
-            this.image = ImageIO.read(new File("./img/carrinho_sprites_1.png"));
+            car1 = ImageIO.read(new File("./img/carrinho_sprites_1.png"));
+            car2 = ImageIO.read(new File("./img/carrinho_sprites_2.png"));
+            car3 = ImageIO.read(new File("./img/carrinho_sprites_3.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,6 +49,16 @@ public class Player extends Entity {
                 return;
             }
             y += speed;
+        }
+
+        if (gp.frameNum % 10 == 0) {
+            if (image == car1) {
+                image = car2;
+            } else if (image == car2) {
+                image = car3;
+            } else if (image == car3) {
+                image = car1;
+            }
         }
     }
 
