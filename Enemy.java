@@ -4,16 +4,17 @@ import java.awt.Graphics2D;
 public class Enemy extends Entity {
     GamePanel gp;
     Player player;
-    int width;
-    int height;
     double x;
-    int y;
     double speed;
 
     public Enemy(GamePanel gp, Player player) {
         this.gp = gp;
         this.player = player;
         
+        setDefaultValues();
+    }
+    
+    public void setDefaultValues() {
         width = gp.tileSize / 2;
         height = gp.tileSize / 5;
         x = 0 - width;
@@ -22,7 +23,8 @@ public class Enemy extends Entity {
     }
 
     public void update() {
-        if (x + width >= player.x && x <= player.x + gp.tileSize && y <= player.y + gp.tileSize && y + height >= player.y) {
+        // edge collision detection
+        if (x + width >= player.x && x <= player.x + gp.tileSize && y <= player.y + gp.tileSize && y + height >= player.y && !Constants.IS_IMORTAL) {
             gp.gameOver = true;
             return;
         }
@@ -32,8 +34,8 @@ public class Enemy extends Entity {
             return;
         }
 
-        // Sobe de forma contínua: ~+1 a cada 5s, com teto de 12
-        double currentSpeed = Math.min(speed + gp.frameNum / 60.0, 20.0);
+        // gradative speed increase
+        double currentSpeed = Math.min(speed + gp.frameNum / Constants.SPEED_INCREASE_RATE, Constants.MAX_SPEED);
         x += currentSpeed;
     }
 

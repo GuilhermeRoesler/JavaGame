@@ -94,10 +94,19 @@ public class GamePanel extends JPanel implements Runnable {
             enemy.draw(g2);
         }
 
+        paintScoreText(g2);
+        paintGameOverText(g2);
+
+        g2.dispose();
+    }
+
+    public void paintScoreText(Graphics2D g2) {
         g2.setFont(new Font("Arial", Font.BOLD, 24));
         g2.setColor(Color.WHITE);
         g2.drawString("Score: " + score, 20, 40);
+    }
 
+    public void paintGameOverText(Graphics2D g2) {
         if (gameOver) {
             g2.setFont(new Font("Press Start 2P", Font.BOLD, 64));
             g2.setColor(Color.RED);
@@ -106,7 +115,5 @@ public class GamePanel extends JPanel implements Runnable {
             int textY = (screenHeight - g2.getFontMetrics().getHeight()) / 2 + g2.getFontMetrics().getAscent();
             g2.drawString(text, textX, textY);
         }
-
-        g2.dispose();
     }
 }
