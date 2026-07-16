@@ -23,6 +23,7 @@ public class Enemy extends Entity {
 
     public void update() {
         if (x + width >= player.x && x <= player.x + gp.tileSize && y <= player.y + gp.tileSize && y + height >= player.y) {
+            gp.gameOver = true;
             return;
         }
         if (x >= gp.screenWidth) {

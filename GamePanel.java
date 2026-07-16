@@ -20,6 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
     int frameNum = 0;
     int score = 0;
+    boolean gameOver = false;
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
@@ -66,6 +67,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+        if (gameOver) {
+            return;
+        }
+
         if (frameNum % 60 == 0) {
             enemies.add(new Enemy(this, player));
         }
@@ -92,6 +97,15 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setFont(new Font("Arial", Font.BOLD, 24));
         g2.setColor(Color.WHITE);
         g2.drawString("Score: " + score, 20, 40);
+
+        if (gameOver) {
+            g2.setFont(new Font("Press Start 2P", Font.BOLD, 64));
+            g2.setColor(Color.RED);
+            String text = "GAME OVER";
+            int textX = (screenWidth - g2.getFontMetrics().stringWidth(text)) / 2;
+            int textY = (screenHeight - g2.getFontMetrics().getHeight()) / 2 + g2.getFontMetrics().getAscent();
+            g2.drawString(text, textX, textY);
+        }
 
         g2.dispose();
     }
