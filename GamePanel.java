@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     Player player = new Player(this, keyH);
     ArrayList<Enemy> enemies = new ArrayList<>();
+    ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -73,6 +74,8 @@ public class GamePanel extends JPanel implements Runnable {
         for (Enemy enemy : enemies) {
             enemy.update();
         }
+        enemies.removeAll(enemiesToRemove);
+        enemiesToRemove.clear();
 
         frameNum++;
     }

@@ -25,6 +25,12 @@ public class Enemy extends Entity {
         if (x + width >= player.x && x <= player.x + gp.tileSize && y <= player.y + gp.tileSize && y + height >= player.y) {
             return;
         }
+        if (x >= gp.screenWidth) {
+            gp.score++;
+            gp.enemiesToRemove.add(this);
+            return;
+        }
+
         x += speed;
     }
 
