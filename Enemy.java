@@ -6,9 +6,9 @@ public class Enemy extends Entity {
     Player player;
     int width;
     int height;
-    int x;
+    double x;
     int y;
-    int speed;
+    double speed;
 
     public Enemy(GamePanel gp, Player player) {
         this.gp = gp;
@@ -18,7 +18,7 @@ public class Enemy extends Entity {
         height = gp.tileSize / 5;
         x = 0 - width;
         y = (int) Math.floor(Math.random() * gp.screenHeight);
-        speed = 4;
+        speed = 4.0;
     }
 
     public void update() {
@@ -32,11 +32,13 @@ public class Enemy extends Entity {
             return;
         }
 
-        x += speed;
+        // Sobe de forma contínua: ~+1 a cada 5s, com teto de 12
+        double currentSpeed = Math.min(speed + gp.frameNum / 60.0, 20.0);
+        x += currentSpeed;
     }
 
     public void draw(Graphics2D g2) {
         g2.setColor(Color.RED);
-        g2.fillRect(x, y, width, height);
+        g2.fillRect((int) x, y, width, height);
     }
 }
