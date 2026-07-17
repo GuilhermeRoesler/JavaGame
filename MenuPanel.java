@@ -16,7 +16,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -52,9 +51,9 @@ public class MenuPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(8, 0, 8, 0);
 
-        JButton playButton = new JButton("Jogar");
-        JButton multiplayerButton = new JButton("Multiplayer");
-        JButton exitButton = new JButton("Sair");
+        MinecraftButton playButton = new MinecraftButton("Jogar");
+        MinecraftButton multiplayerButton = new MinecraftButton("Multiplayer");
+        MinecraftButton exitButton = new MinecraftButton("Sair");
 
         playButton.addActionListener(null);
         multiplayerButton.addActionListener(null);
