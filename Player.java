@@ -27,10 +27,10 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        width = gp.tileSize;
-        height = gp.tileSize;
-        x = gp.screenWidth / 10 * 8;
-        y = gp.screenHeight / 2 - height / 2;
+        width = Constants.TILE_SIZE;
+        height = Constants.TILE_SIZE;
+        x = Constants.SCREEN_WIDTH / 10 * 8;
+        y = Constants.SCREEN_HEIGHT / 2 - height / 2;
         speed = 4;
     }
 
@@ -52,8 +52,8 @@ public class Player extends Entity {
             y -= speed;
         }
         else if (keyH.downPressed) {
-            if (y >= gp.screenHeight - height) {
-                y = gp.screenHeight - height;
+            if (y >= Constants.SCREEN_HEIGHT - height) {
+                y = Constants.SCREEN_HEIGHT - height;
                 return;
             }
             y += speed;

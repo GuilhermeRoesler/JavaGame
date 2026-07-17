@@ -22,18 +22,16 @@ import javax.swing.SwingConstants;
 
 public class MenuPanel extends JPanel {
     private BufferedImage background;
+    private final Runnable onPlay;
+    private final Runnable onMultiplayer;
+    private final Runnable onExit;
 
-    final int originalTileSize = 16;
-    final int scale = 3;
+    public MenuPanel(Runnable onPlay, Runnable onMultiplayer, Runnable onExit) {
+        this.onPlay = onPlay;
+        this.onMultiplayer = onMultiplayer;
+        this.onExit = onExit;
 
-    final int tileSize = originalTileSize * scale;
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
-    final int screenWidth = tileSize * maxScreenCol;
-    final int screenHeight = tileSize * maxScreenRow;
-
-    public MenuPanel() {
-        setPreferredSize(new Dimension(screenWidth, screenHeight));
+        setPreferredSize(new Dimension(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT));
         setLayout(new BorderLayout());
         loadBackground();
 
@@ -55,9 +53,9 @@ public class MenuPanel extends JPanel {
         MinecraftButton multiplayerButton = new MinecraftButton("Multiplayer");
         MinecraftButton exitButton = new MinecraftButton("Sair");
 
-        playButton.addActionListener(null);
-        multiplayerButton.addActionListener(null);
-        exitButton.addActionListener(null);
+        playButton.addActionListener(e -> this.onPlay.run());
+        multiplayerButton.addActionListener(e -> this.onMultiplayer.run());
+        exitButton.addActionListener(e -> this.onExit.run());
 
         gbc.gridy = 0;
         buttons.add(playButton, gbc);

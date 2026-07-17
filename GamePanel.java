@@ -8,33 +8,28 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
-    final int originalTileSize = 16;
-    final int scale = 3;
-
-    final int tileSize = originalTileSize * scale;
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
-    final int screenWidth = tileSize * maxScreenCol;
-    final int screenHeight = tileSize * maxScreenRow;
-
-    int FPS = 60;
     int frameNum = 0;
     int score = 0;
     boolean gameOver = false;
+    boolean multiplayer;
     int enemySpawnRate = Constants.INITIAL_ENEMY_SPAWN_RATE;
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this, keyH);
+    Player player;
     ArrayList<Enemy> enemies = new ArrayList<>();
     ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
 
-    public GamePanel() {
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+    public GamePanel(boolean multiplayer) {
+        this.multiplayer = multiplayer;
+
+        this.setPreferredSize(new Dimension(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+
+        player = new Player(this, keyH);
     }
 
     public void startGameThread() {
@@ -42,9 +37,13 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();
     }
 
+    public void stopGameThread() {
+        gameThread = null;
+    }
+
     @Override
     public void run() {
-        double drawInterval = 1000000000/FPS;
+        double drawInterval = 1000000000 / Constants.FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
 
         while (gameThread != null) {
@@ -91,7 +90,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
 
         player.draw(g2);
         for (Enemy enemy : enemies) {
@@ -115,8 +114,8 @@ public class GamePanel extends JPanel implements Runnable {
             g2.setFont(new Font("Press Start 2P", Font.BOLD, 64));
             g2.setColor(Color.RED);
             String text = "GAME OVER";
-            int textX = (screenWidth - g2.getFontMetrics().stringWidth(text)) / 2;
-            int textY = (screenHeight - g2.getFontMetrics().getHeight()) / 2 + g2.getFontMetrics().getAscent();
+            int textX = (Constants.SCREEN_WIDTH - g2.getFontMetrics().stringWidth(text)) / 2;
+            int textY = (Constants.SCREEN_HEIGHT - g2.getFontMetrics().getHeight()) / 2 + g2.getFontMetrics().getAscent();
             g2.drawString(text, textX, textY);
         }
     }

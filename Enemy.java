@@ -15,20 +15,20 @@ public class Enemy extends Entity {
     }
     
     public void setDefaultValues() {
-        width = gp.tileSize / 2;
-        height = gp.tileSize / 5;
+        width = Constants.TILE_SIZE / 2;
+        height = Constants.TILE_SIZE / 5;
         x = 0 - width;
-        y = (int) Math.floor(Math.random() * gp.screenHeight);
+        y = (int) Math.floor(Math.random() * Constants.SCREEN_HEIGHT);
         speed = 4.0;
     }
 
     public void update() {
         // edge collision detection
-        if (x + width >= player.x && x <= player.x + gp.tileSize && y <= player.y + gp.tileSize && y + height >= player.y && !Constants.IS_IMORTAL) {
+        if (x + width >= player.x && x <= player.x + Constants.TILE_SIZE && y <= player.y + Constants.TILE_SIZE && y + height >= player.y && !Constants.IS_IMORTAL) {
             gp.gameOver = true;
             return;
         }
-        if (x >= gp.screenWidth) {
+        if (x >= Constants.SCREEN_WIDTH) {
             gp.score++;
             gp.enemiesToRemove.add(this);
             return;
