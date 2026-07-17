@@ -7,14 +7,15 @@ public class Main {
         window.setResizable(false);
         window.setTitle("Car Game");
 
-        GamePanel gamePanel = new GamePanel();
-        window.add(gamePanel);
+        // GamePanel gamePanel = new GamePanel();
+        MenuPanel menuPanel = new MenuPanel();
+        window.add(menuPanel);
 
         window.pack();
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
-        gamePanel.startGameThread();
+        // gamePanel.startGameThread();
     }
 }
