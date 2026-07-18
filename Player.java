@@ -10,17 +10,17 @@ public class Player extends Entity {
     KeyHandler keyH;
     BufferedImage image;
 
-    public Player(GamePanel gp, KeyHandler keyH) {
+    public Player(GamePanel gp, KeyHandler keyH, String skinPath) {
         this.gp = gp;
         this.keyH = keyH;
 
-        getPlayerImage();
+        getPlayerImage(skinPath);
         setDefaultValues();
     }
 
-    public void getPlayerImage() {
+    public void getPlayerImage(String skinPath) {
         try {
-            image = ImageIO.read(new File(Constants.IMG_PATH + "car1.png"));
+            image = ImageIO.read(new File(skinPath));
         } catch (IOException e) {
             e.printStackTrace();
         }

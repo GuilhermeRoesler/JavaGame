@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
     ArrayList<Enemy> enemies = new ArrayList<>();
     ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
 
-    public GamePanel(boolean multiplayer) {
+    public GamePanel(String skinPath, boolean multiplayer) {
         this.multiplayer = multiplayer;
 
         this.setPreferredSize(new Dimension(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT));
@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
         this.setFocusable(true);
 
-        player = new Player(this, keyH);
+        player = new Player(this, keyH, skinPath);
     }
 
     public void startGameThread() {

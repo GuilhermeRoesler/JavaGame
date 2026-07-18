@@ -17,12 +17,16 @@ public class Main {
     private final JPanel root = new JPanel(cards);
 
     private MenuPanel menuPanel;
+    private SkinSelectPanel skinSelectPanel;
     private GamePanel gamePanel;
     private boolean multiplayerMode;
 
     public Main() {
         menuPanel = new MenuPanel(this::onPlay, this::onMultiplayer, this::onExit);
+        skinSelectPanel = new SkinSelectPanel(this::onSkinConfirmed, this::showMenu);
+
         root.add(menuPanel, CARD_MENU);
+        root.add(skinSelectPanel, CARD_SKIN);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
@@ -42,14 +46,8 @@ public class Main {
 
     private void onPlay() {
         multiplayerMode = false;
-
-        gamePanel = new GamePanel(multiplayerMode);
-        root.add(gamePanel, CARD_GAME);
-        cards.show(root, CARD_GAME);
-        window.pack();
-
-        gamePanel.requestFocusInWindow();
-        gamePanel.startGameThread();
+        skinSelectPanel.refreshSkins();
+        cards.show(root, CARD_SKIN);
     }
 
     private void onMultiplayer() {
@@ -64,6 +62,22 @@ public class Main {
     private void onExit() {
         stopGame();
         System.exit(0);
+    }
+
+    private void onSkinConfirmed(String skinPath) {
+        stopGame();
+
+        if (gamePanel != null) {
+            root.remove(gamePanel);
+        }
+
+        gamePanel = new GamePanel(skinPath, multiplayerMode);
+        root.add(gamePanel, CARD_GAME);
+        cards.show(root, CARD_GAME);
+        window.pack();
+
+        gamePanel.requestFocusInWindow();
+        gamePanel.startGameThread();
     }
 
     private void showMenu() {
