@@ -1,9 +1,15 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Enemy extends Entity {
     GamePanel gp;
     Player player;
+    BufferedImage image;
     double x;
     double speed;
 
@@ -12,6 +18,7 @@ public class Enemy extends Entity {
         this.player = player;
         
         setDefaultValues();
+        getEnemyImage();
     }
     
     public void setDefaultValues() {
@@ -20,6 +27,14 @@ public class Enemy extends Entity {
         x = 0 - width;
         y = (int) Math.floor(Math.random() * Constants.SCREEN_HEIGHT);
         speed = 4.0;
+    }
+
+    public void getEnemyImage() {
+        try {
+            image = ImageIO.read(new File(Constants.IMG_PATH + "enemy1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void update() {
@@ -42,5 +57,6 @@ public class Enemy extends Entity {
     public void draw(Graphics2D g2) {
         g2.setColor(Color.RED);
         g2.fillRect((int) x, y, width, height);
+        g2.drawImage(image, (int) x, y, width, height, null);
     }
 }

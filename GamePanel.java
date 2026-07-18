@@ -3,11 +3,17 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
+    BufferedImage background;
     int frameNum = 0;
     int score = 0;
     boolean gameOver = false;
@@ -30,6 +36,15 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
 
         player = new Player(this, keyH, skinPath);
+        loadBackground();
+    }
+
+    private void loadBackground() {
+        try {
+            background = ImageIO.read(new File(Constants.IMG_PATH + "road_background.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void startGameThread() {
@@ -88,9 +103,17 @@ public class GamePanel extends JPanel implements Runnable {
         frameNum++;
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
+        if (background != null) {
+            g2.drawImage(background.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH), 0, 0, null);
+        } else {
+            g2.setColor(new Color(40, 40, 40));
+            g2.fillRect(0, 0, getWidth(), getHeight());
+        }
 
         player.draw(g2);
         for (Enemy enemy : enemies) {
