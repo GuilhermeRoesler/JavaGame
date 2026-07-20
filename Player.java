@@ -100,14 +100,21 @@ public class Player extends Entity {
 
             switch (objectName) {
                 case "Key":
+                    gp.playSE(1);
                     keysNum++;
                     gp.obj[index] = null;
                     break;
                 case "Door":
                     if (keysNum > 0) {
+                        gp.playSE(3);
                         gp.obj[index] = null;
                         keysNum--;
                     }
+                    break;
+                    case "Boots":
+                    gp.playSE(2);
+                    speed += 2;
+                    gp.obj[index] = null;
                     break;
             }
         }
