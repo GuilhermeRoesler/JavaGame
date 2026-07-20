@@ -29,12 +29,15 @@ public class TileManager {
             tile[0].image = ImageIO.read(new File("./img/tiles/grass.png"));
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(new File("./img/tiles/wall.png"));
+            tile[1].collision = true;
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(new File("./img/tiles/water.png"));
+            tile[2].collision = true;
             tile[3] = new Tile();
             tile[3].image = ImageIO.read(new File("./img/tiles/earth.png"));
             tile[4] = new Tile();
             tile[4].image = ImageIO.read(new File("./img/tiles/tree.png"));
+            tile[4].collision = true;
             tile[5] = new Tile();
             tile[5].image = ImageIO.read(new File("./img/tiles/sand.png"));
         } catch (IOException e) {
