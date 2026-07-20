@@ -5,6 +5,7 @@ public class Constants {
     public static final String PLAYER_PATH = Utils.joinPath(RES_PATH, "player");
     public static final String TILES_PATH = Utils.joinPath(RES_PATH, "tiles");
     public static final String MAPS_PATH = Utils.joinPath(RES_PATH, "maps");
+    public static final String OBJECTS_PATH = Utils.joinPath(RES_PATH, "objects");
 
     public static final int ORIGINAL_TILE_SIZE = 16;
     public static final int TILE_SCALE = 3;
