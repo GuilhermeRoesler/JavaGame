@@ -6,6 +6,12 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
+    public final int tileSize = Constants.ORIGINAL_TILE_SIZE * Constants.TILE_SCALE;
+    public final int screenWidth = tileSize * Constants.MAX_SCREEN_COL;
+    public final int screenHeight = tileSize * Constants.MAX_SCREEN_ROW;
+    public final int worldWidth = tileSize * Constants.MAX_WORLD_COL;
+    public final int worldHeight = tileSize * Constants.MAX_WORLD_ROW;
+
     public TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler();
     public Thread gameThread;
@@ -15,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Object obj[] = new Object[10];
 
     public GamePanel() {
-        this.setPreferredSize(new Dimension(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT));
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);

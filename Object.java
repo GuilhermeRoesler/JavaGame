@@ -12,12 +12,12 @@ public class Object {
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
             if (
-                worldX > gp.player.worldX - gp.player.screenX - Constants.TILE_SIZE &&
-                worldX < gp.player.worldX + gp.player.screenX + Constants.TILE_SIZE &&
-                worldY > gp.player.worldY - gp.player.screenY - Constants.TILE_SIZE &&
-                worldY < gp.player.worldY + gp.player.screenY + Constants.TILE_SIZE
+                worldX > gp.player.worldX - gp.player.screenX - gp.tileSize &&
+                worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
+                worldY > gp.player.worldY - gp.player.screenY - gp.tileSize &&
+                worldY < gp.player.worldY + gp.player.screenY + gp.tileSize
             ) {
-                g2.drawImage(image, screenX, screenY, Constants.TILE_SIZE, Constants.TILE_SIZE, null);
+                g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
     }
 }
