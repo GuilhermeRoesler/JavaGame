@@ -6,10 +6,11 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
-    TileManager tileM = new TileManager(this);
-    KeyHandler keyH = new KeyHandler();
-    Thread gameThread;
-    Player player = new Player(this, keyH);
+    public TileManager tileM = new TileManager(this);
+    public KeyHandler keyH = new KeyHandler();
+    public Thread gameThread;
+    public CollisionManager collisionM = new CollisionManager(this);
+    public Player player = new Player(this, keyH);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT));

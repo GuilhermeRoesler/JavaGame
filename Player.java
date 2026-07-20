@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,6 +19,8 @@ public class Player extends Entity {
 
         screenX = (Constants.SCREEN_WIDTH - Constants.TILE_SIZE) / 2;
         screenY = (Constants.SCREEN_HEIGHT - Constants.TILE_SIZE) / 2;
+
+        solidArea = Constants.PLAYER_COLLISION_AREA;
 
         setDefaultValues();
         getPlayerImage();
@@ -49,21 +52,29 @@ public class Player extends Entity {
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
             if (keyH.upPressed) {
                 direction = "up";
-                worldY -= speed;
             }
             else if (keyH.downPressed) {
                 direction = "down";
-                worldY += speed;
             }
             else if (keyH.rightPressed) {
                 direction = "right";
-                worldX += speed;
             }
             else if (keyH.leftPressed) {
                 direction = "left";
-                worldX -= speed;
             }
-    
+
+            collisionOn = false;
+            gp.collisionM.checkTile(this);
+
+            if (!collisionOn) {
+                switch (direction) {
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "right": worldX += speed; break;
+                    case "left": worldX -= speed; break;
+                }
+            }
+
             spriteCounter++;
             if (spriteCounter > 12) {
                 if (spriteNum == 1) {
@@ -111,5 +122,9 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image, screenX, screenY, Constants.TILE_SIZE, Constants.TILE_SIZE, null);
+        if (Constants.IS_COLLISION_VISIBLE) {
+            g2.setColor(Color.RED);
+            g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+        }
     }
 }

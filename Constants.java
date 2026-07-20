@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 public class Constants {
     public static final String RES_PATH = "./res";
     public static final String MAPS_PATH = Utils.joinPath(RES_PATH, "maps");
@@ -17,4 +19,7 @@ public class Constants {
     public static final int MAX_WORLD_ROW = 50;
     public static final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
     public static final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
+
+    public static final boolean IS_COLLISION_VISIBLE = false;
+    public static final Rectangle PLAYER_COLLISION_AREA = new Rectangle(8, 30, 32, 20);
 }
