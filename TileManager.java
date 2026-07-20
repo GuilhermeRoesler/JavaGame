@@ -67,18 +67,18 @@ public class TileManager {
     public void draw(Graphics2D g2) {
         for (int i = 0; i < Constants.MAX_WORLD_COL; i++) {
             for (int j = 0; j < Constants.MAX_WORLD_ROW; j++) {
-                int worldX = i * Constants.TILE_SIZE;
-                int worldY = j * Constants.TILE_SIZE;
+                int worldX = i * gp.tileSize;
+                int worldY = j * gp.tileSize;
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;
                 int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
                 if (
-                    worldX > gp.player.worldX - gp.player.screenX - Constants.TILE_SIZE &&
-                    worldX < gp.player.worldX + gp.player.screenX + Constants.TILE_SIZE &&
-                    worldY > gp.player.worldY - gp.player.screenY - Constants.TILE_SIZE &&
-                    worldY < gp.player.worldY + gp.player.screenY + Constants.TILE_SIZE
+                    worldX > gp.player.worldX - gp.player.screenX - gp.tileSize &&
+                    worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
+                    worldY > gp.player.worldY - gp.player.screenY - gp.tileSize &&
+                    worldY < gp.player.worldY + gp.player.screenY + gp.tileSize
                 ) {
-                    g2.drawImage(tile[mapTileNum[i][j]].image, screenX, screenY, Constants.TILE_SIZE, Constants.TILE_SIZE, null);
+                    g2.drawImage(tile[mapTileNum[i][j]].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
                 }
             }
         }

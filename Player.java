@@ -18,8 +18,8 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
-        screenX = (Constants.SCREEN_WIDTH - Constants.TILE_SIZE) / 2;
-        screenY = (Constants.SCREEN_HEIGHT - Constants.TILE_SIZE) / 2;
+        screenX = (gp.screenWidth - gp.tileSize) / 2;
+        screenY = (gp.screenHeight - gp.tileSize) / 2;
 
         solidArea = Constants.PLAYER_COLLISION_AREA;
 
@@ -28,8 +28,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = Constants.TILE_SIZE * 23;
-        worldY = Constants.TILE_SIZE * 21;
+        worldX = gp.tileSize * 23;
+        worldY = gp.tileSize * 21;
         speed = 4;
         direction = "down";
     }
@@ -129,7 +129,7 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(image, screenX, screenY, Constants.TILE_SIZE, Constants.TILE_SIZE, null);
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
         if (Constants.IS_COLLISION_VISIBLE) {
             g2.setColor(Color.RED);
             g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
