@@ -17,10 +17,10 @@ public class TileManager {
         this.gp = gp;
 
         tile = new Tile[10];
-        mapTileNum = new int[Constants.MAX_SCREEN_COL][Constants.MAX_SCREEN_ROW];
+        mapTileNum = new int[Constants.MAX_WORLD_COL][Constants.MAX_WORLD_ROW];
 
         getTileImage();
-        loadMap();
+        loadMap(Utils.joinPath(Constants.MAPS_PATH, "world01.txt"));
     }
 
     public void getTileImage() {
@@ -31,21 +31,27 @@ public class TileManager {
             tile[1].image = ImageIO.read(new File("./img/tiles/wall.png"));
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(new File("./img/tiles/water.png"));
+            tile[3] = new Tile();
+            tile[3].image = ImageIO.read(new File("./img/tiles/earth.png"));
+            tile[4] = new Tile();
+            tile[4].image = ImageIO.read(new File("./img/tiles/tree.png"));
+            tile[5] = new Tile();
+            tile[5].image = ImageIO.read(new File("./img/tiles/sand.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadMap() {
+    public void loadMap(String filePath) {
         try {
-            InputStream is = new FileInputStream("./map01.txt");
+            InputStream is = new FileInputStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-            for (int j = 0; j < Constants.MAX_SCREEN_ROW; j++) {
+            for (int j = 0; j < Constants.MAX_WORLD_ROW; j++) {
                 String line = br.readLine();
                 String[] numbers = line.split(" ");
 
-                for (int i = 0; i < Constants.MAX_SCREEN_COL; i++) {
+                for (int i = 0; i < Constants.MAX_WORLD_COL; i++) {
                     mapTileNum[i][j] = Integer.parseInt(numbers[i]);
                 }
             }
@@ -56,9 +62,21 @@ public class TileManager {
     }
 
     public void draw(Graphics2D g2) {
-        for (int i = 0; i < 16; i++) {
-            for (int j = 0; j < 12; j++) {
-                g2.drawImage(tile[mapTileNum[i][j]].image, i * Constants.TILE_SIZE, j * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, null);
+        for (int i = 0; i < Constants.MAX_WORLD_COL; i++) {
+            for (int j = 0; j < Constants.MAX_WORLD_ROW; j++) {
+                int worldX = i * Constants.TILE_SIZE;
+                int worldY = j * Constants.TILE_SIZE;
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+                if (
+                    worldX > gp.player.worldX - gp.player.screenX - Constants.TILE_SIZE &&
+                    worldX < gp.player.worldX + gp.player.screenX + Constants.TILE_SIZE &&
+                    worldY > gp.player.worldY - gp.player.screenY - Constants.TILE_SIZE &&
+                    worldY < gp.player.worldY + gp.player.screenY + Constants.TILE_SIZE
+                ) {
+                    g2.drawImage(tile[mapTileNum[i][j]].image, screenX, screenY, Constants.TILE_SIZE, Constants.TILE_SIZE, null);
+                }
             }
         }
     }
