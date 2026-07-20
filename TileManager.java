@@ -17,7 +17,7 @@ public class TileManager {
         this.gp = gp;
 
         tile = new Tile[10];
-        mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
+        mapTileNum = new int[Constants.MAX_SCREEN_COL][Constants.MAX_SCREEN_ROW];
 
         getTileImage();
         loadMap();
@@ -41,11 +41,11 @@ public class TileManager {
             InputStream is = new FileInputStream("./map01.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-            for (int j = 0; j < gp.maxScreenRow; j++) {
+            for (int j = 0; j < Constants.MAX_SCREEN_ROW; j++) {
                 String line = br.readLine();
                 String[] numbers = line.split(" ");
 
-                for (int i = 0; i < gp.maxScreenCol; i++) {
+                for (int i = 0; i < Constants.MAX_SCREEN_COL; i++) {
                     mapTileNum[i][j] = Integer.parseInt(numbers[i]);
                 }
             }
@@ -58,7 +58,7 @@ public class TileManager {
     public void draw(Graphics2D g2) {
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 12; j++) {
-                g2.drawImage(tile[mapTileNum[i][j]].image, i * gp.tileSize, j * gp.tileSize, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(tile[mapTileNum[i][j]].image, i * Constants.TILE_SIZE, j * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE, null);
             }
         }
     }
