@@ -16,6 +16,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Sound SFX = new Sound();
     public CollisionManager collisionM = new CollisionManager(this);
     public AssetSetter aSetter = new AssetSetter(this);
+    public UI ui = new UI(this);
     public Thread gameThread;
 
     public Player player = new Player(this, keyH);
@@ -74,14 +75,13 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         tileM.draw(g2);
-
         for (int i = 0; i < obj.length; i++) {
             if (obj[i] != null) {
                 obj[i].draw(g2, this);
             }
         }
-
         player.draw(g2);
+        ui.draw(g2);
 
         g2.dispose();
     }
