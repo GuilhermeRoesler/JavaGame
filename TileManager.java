@@ -1,5 +1,4 @@
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,20 +16,57 @@ public class TileManager {
     public TileManager(GamePanel gp) {
         this.gp = gp;
 
-        tile = new Tile[10];
+        tile = new Tile[50];
         mapTileNum = new int[Constants.MAX_WORLD_COL][Constants.MAX_WORLD_ROW];
 
         getTileImage();
-        loadMap(Utils.joinPath(Constants.MAPS_PATH, "world01.txt"));
+        loadMap(Utils.joinPath(Constants.MAPS_PATH, "world02.txt"));
     }
 
     public void getTileImage() {
-        setup(0, "grass.png", false);
-        setup(1, "wall.png", true);
-        setup(2, "water.png", true);
-        setup(3, "earth.png", false);
-        setup(4, "tree.png", true);
-        setup(5, "sand.png", false);
+        setup(0, "grass00.png", false);
+        setup(1, "grass00.png", false);
+        setup(2, "grass00.png", false);
+        setup(3, "grass00.png", false);
+        setup(4, "grass00.png", false);
+        setup(5, "grass00.png", false);
+        setup(6, "grass00.png", false);
+        setup(7, "grass00.png", false);
+        setup(8, "grass00.png", false);
+        setup(9, "grass00.png", false);
+
+        setup(10, "grass00.png", false);
+        setup(11, "grass01.png", false);
+        setup(12, "water00.png", true);
+        setup(13, "water01.png", true);
+        setup(14, "water02.png", true);
+        setup(15, "water03.png", true);
+        setup(16, "water04.png", true);
+        setup(17, "water05.png", true);
+        setup(18, "water06.png", true);
+        setup(19, "water07.png", true);
+        setup(20, "water08.png", true);
+        setup(21, "water09.png", true);
+        setup(22, "water10.png", true);
+        setup(23, "water11.png", true);
+        setup(24, "water12.png", true);
+        setup(25, "water13.png", true);
+        setup(26, "road00.png", false);
+        setup(27, "road01.png", false);
+        setup(28, "road02.png", false);
+        setup(29, "road03.png", false);
+        setup(30, "road04.png", false);
+        setup(31, "road05.png", false);
+        setup(32, "road06.png", false);
+        setup(33, "road07.png", false);
+        setup(34, "road08.png", false);
+        setup(35, "road09.png", false);
+        setup(36, "road10.png", false);
+        setup(37, "road11.png", false);
+        setup(38, "road12.png", false);
+        setup(39, "earth.png", false);
+        setup(40, "wall.png", true);
+        setup(41, "tree.png", true);
     }
 
     public void setup(int index, String imageName, boolean collision) {
