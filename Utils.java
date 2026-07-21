@@ -1,3 +1,4 @@
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,10 +12,18 @@ public class Utils {
 
     public static BufferedImage readImage(String path, String basename) {
         try {
-            return ImageIO.read(new File(joinPath(path, basename)));
+            return scaleImage(ImageIO.read(new File(joinPath(path, basename))), 48, 48);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static BufferedImage scaleImage(BufferedImage original, int width, int height) {
+        BufferedImage scaledImage = new BufferedImage(width, height, original.getType());
+        Graphics2D g2 = scaledImage.createGraphics();
+        g2.drawImage(original, 0, 0, width, height, null);
+
+        return scaledImage;
     }
 }

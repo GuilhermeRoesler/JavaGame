@@ -42,18 +42,27 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
+        up1 = setup("boy_up_1.png");
+        up2 = setup("boy_up_2.png");
+        down1 = setup("boy_down_1.png");
+        down2 = setup("boy_down_2.png");
+        left1 = setup("boy_left_1.png");
+        left2 = setup("boy_left_2.png");
+        right1 = setup("boy_right_1.png");
+        right2 = setup("boy_right_2.png");
+    }
+
+    public BufferedImage setup(String imageName) {
+        BufferedImage image = null;
+
         try {
-            up1 = ImageIO.read(new File(Utils.joinPath(Constants.PLAYER_PATH, "boy_up_1.png")));
-            up2 = ImageIO.read(new File(Utils.joinPath(Constants.PLAYER_PATH, "boy_up_2.png")));
-            down1 = ImageIO.read(new File(Utils.joinPath(Constants.PLAYER_PATH, "boy_down_1.png")));
-            down2 = ImageIO.read(new File(Utils.joinPath(Constants.PLAYER_PATH, "boy_down_2.png")));
-            left1 = ImageIO.read(new File(Utils.joinPath(Constants.PLAYER_PATH, "boy_left_1.png")));
-            left2 = ImageIO.read(new File(Utils.joinPath(Constants.PLAYER_PATH, "boy_left_2.png")));
-            right1 = ImageIO.read(new File(Utils.joinPath(Constants.PLAYER_PATH, "boy_right_1.png")));
-            right2 = ImageIO.read(new File(Utils.joinPath(Constants.PLAYER_PATH, "boy_right_2.png")));
+            image = ImageIO.read(new File(Utils.joinPath(Constants.PLAYER_PATH, imageName)));
+            image = Utils.scaleImage(image, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return image;
     }
 
     public void update() {
@@ -190,7 +199,7 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, screenX, screenY, null);
         if (Constants.IS_COLLISION_VISIBLE) {
             g2.setColor(Color.RED);
             g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);

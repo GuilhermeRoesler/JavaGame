@@ -1,4 +1,5 @@
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,22 +25,20 @@ public class TileManager {
     }
 
     public void getTileImage() {
+        setup(0, "grass.png", false);
+        setup(1, "wall.png", true);
+        setup(2, "water.png", true);
+        setup(3, "earth.png", false);
+        setup(4, "tree.png", true);
+        setup(5, "sand.png", false);
+    }
+
+    public void setup(int index, String imageName, boolean collision) {
         try {
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(new File(Utils.joinPath(Constants.TILES_PATH, "grass.png")));
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(new File(Utils.joinPath(Constants.TILES_PATH, "wall.png")));
-            tile[1].collision = true;
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(new File(Utils.joinPath(Constants.TILES_PATH, "water.png")));
-            tile[2].collision = true;
-            tile[3] = new Tile();
-            tile[3].image = ImageIO.read(new File(Utils.joinPath(Constants.TILES_PATH, "earth.png")));
-            tile[4] = new Tile();
-            tile[4].image = ImageIO.read(new File(Utils.joinPath(Constants.TILES_PATH, "tree.png")));
-            tile[4].collision = true;
-            tile[5] = new Tile();
-            tile[5].image = ImageIO.read(new File(Utils.joinPath(Constants.TILES_PATH, "sand.png")));
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(new File(Utils.joinPath(Constants.TILES_PATH, imageName)));
+            tile[index].image = Utils.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
+            tile[index].collision = collision;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,13 +71,11 @@ public class TileManager {
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;
                 int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-                if (
-                    worldX > gp.player.worldX - gp.player.screenX - gp.tileSize &&
-                    worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
-                    worldY > gp.player.worldY - gp.player.screenY - gp.tileSize &&
-                    worldY < gp.player.worldY + gp.player.screenY + gp.tileSize
-                ) {
-                    g2.drawImage(tile[mapTileNum[i][j]].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                if (worldX > gp.player.worldX - gp.player.screenX - gp.tileSize &&
+                        worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
+                        worldY > gp.player.worldY - gp.player.screenY - gp.tileSize &&
+                        worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
+                    g2.drawImage(tile[mapTileNum[i][j]].image, screenX, screenY, null);
                 }
             }
         }
