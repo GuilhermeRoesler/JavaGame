@@ -109,8 +109,12 @@ public class Player extends Entity {
 
     public void interactNPC(int index) {
         if (index != 999) {
-
+            if (gp.keyH.enterPressed) {
+                gp.gameState = gp.dialogueState;
+                gp.npc[index].speak();
+            }
         }
+        gp.keyH.enterPressed = false;
     }
 
     public void draw(Graphics2D g2) {
