@@ -1,5 +1,3 @@
-import java.awt.Rectangle;
-
 public class Constants {
     public static final String RES_PATH = "./res";
     public static final String PLAYER_PATH = Utils.joinPath(RES_PATH, "player");
@@ -17,5 +15,4 @@ public class Constants {
     public static final int FPS = 60;
 
     public static final boolean IS_COLLISION_VISIBLE = false;
-    public static final Rectangle PLAYER_COLLISION_AREA = new Rectangle(8, 30, 32, 20);
 }

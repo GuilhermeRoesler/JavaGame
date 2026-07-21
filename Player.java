@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,12 +10,14 @@ import javax.imageio.ImageIO;
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
-    int standCounter = 0;
 
     public final int screenX;
     public final int screenY;
 
     public int keysNum;
+    int standCounter = 0;
+    boolean isMoving = false;
+    int pixelCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -23,7 +26,7 @@ public class Player extends Entity {
         screenX = (gp.screenWidth - gp.tileSize) / 2;
         screenY = (gp.screenHeight - gp.tileSize) / 2;
 
-        solidArea = Constants.PLAYER_COLLISION_AREA;
+        solidArea = new Rectangle(1, 1, 46, 46);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
@@ -54,32 +57,48 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-            if (keyH.upPressed) {
-                direction = "up";
-            }
-            else if (keyH.downPressed) {
-                direction = "down";
-            }
-            else if (keyH.rightPressed) {
-                direction = "right";
-            }
-            else if (keyH.leftPressed) {
-                direction = "left";
-            }
+        if (!isMoving) {
+            if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+                if (keyH.upPressed) {
+                    direction = "up";
+                } else if (keyH.downPressed) {
+                    direction = "down";
+                } else if (keyH.rightPressed) {
+                    direction = "right";
+                } else if (keyH.leftPressed) {
+                    direction = "left";
+                }
 
-            collisionOn = false;
-            gp.collisionM.checkTile(this);
+                isMoving = true;
 
-            int objInex = gp.collisionM.checkObject(this, true);
-            pickUpObject(objInex);
+                collisionOn = false;
+                gp.collisionM.checkTile(this);
 
+                int objInex = gp.collisionM.checkObject(this, true);
+                pickUpObject(objInex);
+            } else {
+                standCounter++;
+
+                if (standCounter > 20) {
+                    spriteNum = 1;
+                    standCounter = 0;
+                }
+            }
+        } else {
             if (!collisionOn) {
                 switch (direction) {
-                    case "up": worldY -= speed; break;
-                    case "down": worldY += speed; break;
-                    case "right": worldX += speed; break;
-                    case "left": worldX -= speed; break;
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
                 }
             }
 
@@ -92,12 +111,11 @@ public class Player extends Entity {
                 }
                 spriteCounter = 0;
             }
-        } else {
-            standCounter++;
 
-            if (standCounter > 20) {
-                spriteNum = 1;
-                standCounter = 0;
+            pixelCounter += speed;
+            if (pixelCounter >= gp.tileSize) {
+                pixelCounter = 0;
+                isMoving = false;
             }
         }
     }
