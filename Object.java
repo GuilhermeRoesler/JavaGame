@@ -3,7 +3,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Object {
-    public BufferedImage image;
+    public BufferedImage image, image2, image3;
     public String name;
     public boolean collision = false;
     public int worldX, worldY;
@@ -16,12 +16,10 @@ public class Object {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if (
-            worldX > gp.player.worldX - gp.player.screenX - gp.tileSize &&
-            worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
-            worldY > gp.player.worldY - gp.player.screenY - gp.tileSize &&
-            worldY < gp.player.worldY + gp.player.screenY + gp.tileSize
-        ) {
+        if (worldX > gp.player.worldX - gp.player.screenX - gp.tileSize &&
+                worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
+                worldY > gp.player.worldY - gp.player.screenY - gp.tileSize &&
+                worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
         }
     }

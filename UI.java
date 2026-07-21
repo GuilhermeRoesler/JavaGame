@@ -2,11 +2,13 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 public class UI {
     GamePanel gp;
     Graphics2D g2;
     Font arial_40, arial_80B;
+    BufferedImage heart_full, heart_half, heart_blank;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
@@ -21,6 +23,11 @@ public class UI {
 
         arial_40 = new Font("Cambria", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
+
+        Object heart = new Heart();
+        heart_full = heart.image;
+        heart_half = heart.image2;
+        heart_blank = heart.image3;
     }
 
     public void showMessage(String text) {
@@ -38,13 +45,34 @@ public class UI {
             drawTitleScreen();
         }
         if (gp.gameState == gp.playState) {
-
+            drawPlayerLife();
         }
         if (gp.gameState == gp.pauseState) {
+            drawPlayerLife();
             drawPauseScreen();
         }
         if (gp.gameState == gp.dialogueState) {
+            drawPlayerLife();
             drawDialogueScreen();
+        }
+    }
+
+    public void drawPlayerLife() {
+        int x = gp.tileSize / 2;
+        int y = gp.tileSize / 2;
+        int lifeCounter = gp.player.life;
+
+        for (int i = 0; i < gp.player.maxLife / 2; i++) {
+            if (lifeCounter >= 2) {
+                g2.drawImage(heart_full, x, y, null);
+                lifeCounter -= 2;
+            } else if (lifeCounter >= 1) {
+                g2.drawImage(heart_half, x, y, null);
+                lifeCounter--;
+            } else {
+                g2.drawImage(heart_blank, x, y, null);
+            }
+            x += gp.tileSize;
         }
     }
 
