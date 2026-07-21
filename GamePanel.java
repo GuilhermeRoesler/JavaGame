@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity npc[] = new Entity[10];
 
     public int gameState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
@@ -39,8 +40,8 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
-        playMusic(0);
-        gameState = playState;
+        // playMusic(0);
+        gameState = titleState;
     }
 
     public void startGameThread() {
@@ -95,21 +96,25 @@ public class GamePanel extends JPanel implements Runnable {
 
         long drawStart = System.nanoTime();
 
-        tileM.draw(g2);
-        for (int i = 0; i < obj.length; i++) {
-            if (obj[i] != null) {
-                obj[i].draw(g2, this);
+        if (gameState == titleState) {
+            ui.draw(g2);
+        } else {
+            tileM.draw(g2);
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    obj[i].draw(g2, this);
+                }
             }
-        }
 
-        for (int i = 0; i < npc.length; i++) {
-            if (npc[i] != null) {
-                npc[i].draw(g2);
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
+                    npc[i].draw(g2);
+                }
             }
-        }
 
-        player.draw(g2);
-        ui.draw(g2);
+            player.draw(g2);
+            ui.draw(g2);
+        }
 
         if (keyH.checkDrawTime) {
             long passedTime = System.nanoTime() - drawStart;
