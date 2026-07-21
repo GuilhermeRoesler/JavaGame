@@ -14,7 +14,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    public int keysNum;
+    // public int keysNum;
     int standCounter = 0;
     boolean isMoving = false;
     int pixelCounter = 0;
@@ -130,39 +130,6 @@ public class Player extends Entity {
     }
 
     public void pickUpObject(int index) {
-        if (index != 999) {
-            String objectName = gp.obj[index].name;
-
-            switch (objectName) {
-                case "Key":
-                    gp.playSFX(1);
-                    keysNum++;
-                    gp.obj[index] = null;
-                    gp.ui.showMessage("You got a key!");
-                    break;
-                case "Door":
-                    if (keysNum > 0) {
-                        gp.playSFX(3);
-                        gp.obj[index] = null;
-                        keysNum--;
-                        gp.ui.showMessage("You opened the door!");
-                    } else {
-                        gp.ui.showMessage("You need a key!");
-                    }
-                    break;
-                case "Boots":
-                    gp.playSFX(2);
-                    speed += 2;
-                    gp.obj[index] = null;
-                    gp.ui.showMessage("Speed up!");
-                    break;
-                case "Chest":
-                    gp.ui.gameFinished = true;
-                    gp.stopMusic();
-                    gp.playSFX(4);
-                    break;
-            }
-        }
     }
 
     public void draw(Graphics2D g2) {
