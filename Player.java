@@ -2,25 +2,20 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class Player extends Entity {
-    GamePanel gp;
     KeyHandler keyH;
 
     public final int screenX;
     public final int screenY;
 
-    // public int keysNum;
     int standCounter = 0;
     boolean isMoving = false;
     int pixelCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp;
+        super(gp);
+
         this.keyH = keyH;
 
         screenX = (gp.screenWidth - gp.tileSize) / 2;
@@ -42,58 +37,37 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
-        up1 = setup("boy_up_1.png");
-        up2 = setup("boy_up_2.png");
-        down1 = setup("boy_down_1.png");
-        down2 = setup("boy_down_2.png");
-        left1 = setup("boy_left_1.png");
-        left2 = setup("boy_left_2.png");
-        right1 = setup("boy_right_1.png");
-        right2 = setup("boy_right_2.png");
-    }
-
-    public BufferedImage setup(String imageName) {
-        BufferedImage image = null;
-
-        try {
-            image = ImageIO.read(new File(Utils.joinPath(Constants.PLAYER_PATH, imageName)));
-            image = Utils.scaleImage(image, gp.tileSize, gp.tileSize);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return image;
+        up1 = setup(Constants.PLAYER_PATH, "boy_up_1.png");
+        up2 = setup(Constants.PLAYER_PATH, "boy_up_2.png");
+        down1 = setup(Constants.PLAYER_PATH, "boy_down_1.png");
+        down2 = setup(Constants.PLAYER_PATH, "boy_down_2.png");
+        left1 = setup(Constants.PLAYER_PATH, "boy_left_1.png");
+        left2 = setup(Constants.PLAYER_PATH, "boy_left_2.png");
+        right1 = setup(Constants.PLAYER_PATH, "boy_right_1.png");
+        right2 = setup(Constants.PLAYER_PATH, "boy_right_2.png");
     }
 
     public void update() {
-        if (!isMoving) {
-            if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-                if (keyH.upPressed) {
-                    direction = "up";
-                } else if (keyH.downPressed) {
-                    direction = "down";
-                } else if (keyH.rightPressed) {
-                    direction = "right";
-                } else if (keyH.leftPressed) {
-                    direction = "left";
-                }
-
-                isMoving = true;
-
-                collisionOn = false;
-                gp.collisionM.checkTile(this);
-
-                int objInex = gp.collisionM.checkObject(this, true);
-                pickUpObject(objInex);
-            } else {
-                standCounter++;
-
-                if (standCounter > 20) {
-                    spriteNum = 1;
-                    standCounter = 0;
-                }
+        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+            if (keyH.upPressed) {
+                direction = "up";
+            } else if (keyH.downPressed) {
+                direction = "down";
+            } else if (keyH.rightPressed) {
+                direction = "right";
+            } else if (keyH.leftPressed) {
+                direction = "left";
             }
-        } else {
+
+            collisionOn = false;
+            gp.collisionM.checkTile(this);
+
+            int objIndex = gp.collisionM.checkObject(this, true);
+            pickUpObject(objIndex);
+
+            int npcIndex = gp.collisionM.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
+
             if (!collisionOn) {
                 switch (direction) {
                     case "up":
@@ -120,16 +94,23 @@ public class Player extends Entity {
                 }
                 spriteCounter = 0;
             }
+        } else {
+            standCounter++;
 
-            pixelCounter += speed;
-            if (pixelCounter >= gp.tileSize) {
-                pixelCounter = 0;
-                isMoving = false;
+            if (standCounter > 20) {
+                spriteNum = 1;
+                standCounter = 0;
             }
         }
     }
 
     public void pickUpObject(int index) {
+    }
+
+    public void interactNPC(int index) {
+        if (index != 999) {
+
+        }
     }
 
     public void draw(Graphics2D g2) {
