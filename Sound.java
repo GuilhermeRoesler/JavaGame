@@ -19,6 +19,9 @@ public class Sound {
             soundURL[4] = new File(Utils.joinPath(Constants.SOUNDS_PATH, "fanfare.wav")).toURI().toURL();
             soundURL[5] = new File(Utils.joinPath(Constants.SOUNDS_PATH, "hitmonster.wav")).toURI().toURL();
             soundURL[6] = new File(Utils.joinPath(Constants.SOUNDS_PATH, "receivedamage.wav")).toURI().toURL();
+            // soundURL[7] = new File(Utils.joinPath(Constants.SOUNDS_PATH,
+            // "swingweapon.wav")).toURI().toURL();
+            soundURL[8] = new File(Utils.joinPath(Constants.SOUNDS_PATH, "levelup.wav")).toURI().toURL();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

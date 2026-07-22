@@ -15,12 +15,13 @@ public class AssetSetter {
     }
 
     public void setMonster() {
-        gp.monster[0] = new GreenSlime(gp);
-        gp.monster[0].worldX = gp.tileSize * 23;
-        gp.monster[0].worldY = gp.tileSize * 36;
+        int xs[] = { 21, 23, 24, 34, 38 };
+        int ys[] = { 38, 42, 37, 42, 42 };
 
-        gp.monster[1] = new GreenSlime(gp);
-        gp.monster[1].worldX = gp.tileSize * 23;
-        gp.monster[1].worldY = gp.tileSize * 37;
+        for (int i = 0; i < xs.length; i++) {
+            gp.monster[i] = new GreenSlime(gp);
+            gp.monster[i].worldX = gp.tileSize * xs[i];
+            gp.monster[i].worldY = gp.tileSize * ys[i];
+        }
     }
 }
