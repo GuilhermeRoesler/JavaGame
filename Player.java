@@ -1,3 +1,4 @@
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -50,7 +51,7 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed || keyH.enterPressed) {
             if (keyH.upPressed) {
                 direction = "up";
             } else if (keyH.downPressed) {
@@ -73,12 +74,14 @@ public class Player extends Entity {
             int npcIndex = gp.collisionM.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
 
+            // CHECK MONSTER COLLISION
+            int monsterIndex = gp.collisionM.checkEntity(this, gp.monster);
+            contactMonster(monsterIndex);
+
             // CHECK EVENT COLLISION
             gp.eHandler.checkEvent();
 
-            gp.keyH.enterPressed = false;
-
-            if (!collisionOn) {
+            if (!collisionOn && !keyH.enterPressed) {
                 switch (direction) {
                     case "up":
                         worldY -= speed;
@@ -94,6 +97,8 @@ public class Player extends Entity {
                         break;
                 }
             }
+
+            gp.keyH.enterPressed = false;
 
             spriteCounter++;
             if (spriteCounter > 12) {
@@ -112,16 +117,33 @@ public class Player extends Entity {
                 standCounter = 0;
             }
         }
+        if (invincible) {
+            invincibleCounter++;
+
+            if (invincibleCounter > 60) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
 
-    public void pickUpObject(int index) {
+    public void pickUpObject(int i) {
     }
 
-    public void interactNPC(int index) {
-        if (index != 999) {
+    public void interactNPC(int i) {
+        if (i != 999) {
             if (gp.keyH.enterPressed) {
                 gp.gameState = gp.dialogueState;
-                gp.npc[index].speak();
+                gp.npc[i].speak();
+            }
+        }
+    }
+
+    public void contactMonster(int i) {
+        if (i != 999) {
+            if (!invincible) {
+                life--;
+                invincible = true;
             }
         }
     }
@@ -160,7 +182,13 @@ public class Player extends Entity {
                 break;
         }
 
+        if (invincible) {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+        }
+
         g2.drawImage(image, screenX, screenY, null);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
         if (Constants.IS_COLLISION_VISIBLE) {
             g2.setColor(Color.RED);
             g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);

@@ -19,11 +19,14 @@ public class Entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
+    public boolean invincible = false;
+    public int invincibleCounter = 0;
     String dialogues[] = new String[20];
     int dialogueIndex = 0;
     public BufferedImage image, image2, image3;
     public String name;
     public boolean collision = false;
+    public int type;
 
     public int maxLife;
     public int life;
@@ -62,7 +65,16 @@ public class Entity {
         collisionOn = false;
         gp.collisionM.checkTile(this);
         gp.collisionM.checkObject(this, false);
-        gp.collisionM.checkPlayer(this);
+        gp.collisionM.checkEntity(this, gp.npc);
+        gp.collisionM.checkEntity(this, gp.monster);
+        boolean contactPlayer = gp.collisionM.checkPlayer(this);
+
+        if (this.type == 2 && contactPlayer) {
+            if (!gp.player.invincible) {
+                gp.player.life--;
+                gp.player.invincible = true;
+            }
+        }
 
         if (!collisionOn) {
             switch (direction) {
