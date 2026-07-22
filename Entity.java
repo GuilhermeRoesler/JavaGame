@@ -28,11 +28,17 @@ public class Entity {
     public boolean collisionOn = false;
     public boolean invincible = false;
     public boolean attacking = false;
+    public boolean alive = true;
+    public boolean dying = false;
+    public boolean hpBarOn = false;
 
     // COUNTER
     public int spriteCounter = 0;
     public int actionLockCounter = 0;
     public int invincibleCounter = 0;
+    public int dyingCounter = 0;
+    public int dyingStage = 0;
+    public int hpBarCounter = 0;
 
     // CHARACTER ATTRIBUTES
     public int type;
@@ -46,6 +52,9 @@ public class Entity {
     }
 
     public void setAction() {
+    }
+
+    public void damageReaction() {
     }
 
     public void speak() {
@@ -81,6 +90,7 @@ public class Entity {
 
         if (this.type == 2 && contactPlayer) {
             if (!gp.player.invincible) {
+                gp.playSFX(5);
                 gp.player.life--;
                 gp.player.invincible = true;
             }
@@ -164,8 +174,27 @@ public class Entity {
                     break;
             }
 
+            if (type == 2 && hpBarOn) {
+                g2.setColor(new Color(35, 35, 35));
+                g2.fillRect(screenX - 1, screenY - 16, gp.tileSize + 2, 12);
+                g2.setColor(new Color(255, 0, 30));
+                g2.fillRect(screenX, screenY - 15, gp.tileSize * life / maxLife, 10);
+
+                hpBarCounter++;
+                if (hpBarCounter > 120) {
+                    hpBarCounter = 0;
+                    hpBarOn = false;
+                }
+            }
+
             if (invincible) {
+                hpBarOn = true;
+                hpBarCounter = 0;
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+            }
+
+            if (dying) {
+                dyingAnimation(g2);
             }
 
             g2.drawImage(image, screenX, screenY, null);
@@ -178,9 +207,23 @@ public class Entity {
         }
     }
 
+    public void dyingAnimation(Graphics2D g2) {
+        dyingCounter++;
+
+        if (dyingCounter <= 40) {
+            if (dyingCounter / 5 % 2 == 0) {
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
+            } else {
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            }
+        } else {
+            dying = false;
+            alive = false;
+        }
+    }
+
     public BufferedImage setup(String path, String imageName, int width, int height) {
         BufferedImage image = null;
-        System.out.println(path);
 
         try {
             image = ImageIO.read(new File(Utils.joinPath(path, imageName)));
