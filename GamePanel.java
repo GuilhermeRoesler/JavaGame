@@ -17,6 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionManager collisionM = new CollisionManager(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
+    public EventHandler eHandler = new EventHandler(this);
     public Thread gameThread;
 
     public Player player = new Player(this, keyH);

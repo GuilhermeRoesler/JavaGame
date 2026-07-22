@@ -61,14 +61,22 @@ public class Player extends Entity {
                 direction = "left";
             }
 
+            // CHECK TILE COLLISION
             collisionOn = false;
             gp.collisionM.checkTile(this);
 
+            // CHECK OBJECT COLLISION
             int objIndex = gp.collisionM.checkObject(this, true);
             pickUpObject(objIndex);
 
+            // CHECK NPC COLLISION
             int npcIndex = gp.collisionM.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
+
+            // CHECK EVENT COLLISION
+            gp.eHandler.checkEvent();
+
+            gp.keyH.enterPressed = false;
 
             if (!collisionOn) {
                 switch (direction) {
@@ -116,7 +124,6 @@ public class Player extends Entity {
                 gp.npc[index].speak();
             }
         }
-        gp.keyH.enterPressed = false;
     }
 
     public void draw(Graphics2D g2) {
