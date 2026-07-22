@@ -4,6 +4,6 @@ public class Key extends Entity {
     public Key(GamePanel gp) {
         super(gp);
         name = "Key";
-        down1 = setup(Constants.OBJECTS_PATH, "key.png");
+        down1 = setup(Constants.OBJECTS_PATH, "key.png", gp.tileSize, gp.tileSize);
     }
 }

@@ -4,7 +4,7 @@ public class Door extends Entity {
     public Door(GamePanel gp) {
         super(gp);
         name = "Door";
-        down1 = setup(Constants.OBJECTS_PATH, "door.png");
+        down1 = setup(Constants.OBJECTS_PATH, "door.png", gp.tileSize, gp.tileSize);
         collision = true;
 
         solidArea.x = 0;
