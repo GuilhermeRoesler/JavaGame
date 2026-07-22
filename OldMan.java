@@ -1,11 +1,17 @@
+import java.awt.Rectangle;
 import java.util.Random;
 
 public class OldMan extends Entity {
     public OldMan(GamePanel gp) {
         super(gp);
 
+        solidArea = new Rectangle(8, 30, 32, 20);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+
         direction = "down";
         speed = 1;
+
         getNPCImage();
         setDialogue();
     }

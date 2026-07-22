@@ -1,6 +1,9 @@
-public class Key extends Object {
-    public Key() {
+public class Key extends Entity {
+    GamePanel gp;
+
+    public Key(GamePanel gp) {
+        super(gp);
         name = "Key";
-        image = Utils.readImage(Constants.OBJECTS_PATH, "key.png");
+        down1 = setup(Constants.OBJECTS_PATH, "key.png");
     }
 }

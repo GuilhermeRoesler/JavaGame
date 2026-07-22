@@ -1,6 +1,9 @@
-public class Chest extends Object {
-    public Chest() {
+public class Chest extends Entity {
+    GamePanel gp;
+
+    public Chest(GamePanel gp) {
+        super(gp);
         name = "Chest";
-        image = Utils.readImage(Constants.OBJECTS_PATH, "chest.png");
+        down1 = setup(Constants.OBJECTS_PATH, "chest.png");
     }
 }

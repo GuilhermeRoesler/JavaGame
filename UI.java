@@ -24,7 +24,7 @@ public class UI {
         arial_40 = new Font("Cambria", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
 
-        Object heart = new Heart();
+        Entity heart = new Heart(gp);
         heart_full = heart.image;
         heart_half = heart.image2;
         heart_blank = heart.image3;

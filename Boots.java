@@ -1,6 +1,9 @@
-public class Boots extends Object {
-    public Boots() {
+public class Boots extends Entity {
+    GamePanel gp;
+
+    public Boots(GamePanel gp) {
+        super(gp);
         name = "Boots";
-        image = Utils.readImage(Constants.OBJECTS_PATH, "boots.png");
+        down1 = setup(Constants.OBJECTS_PATH, "boots.png");
     }
 }
