@@ -40,8 +40,28 @@ public class Player extends Entity {
         worldY = gp.tileSize * 21;
         speed = 4;
         direction = "down";
+
+        // PLAYER STATUS
+        level = 1;
         maxLife = 6;
         life = maxLife;
+        strength = 1;
+        dexterity = 1;
+        exp = 0;
+        nextLevelExp = 5;
+        coin = 0;
+        currentWeapon = new SwordNormal(gp);
+        currentShield = new ShieldWood(gp);
+        attack = getAttack();
+        defense = getDefense();
+    }
+
+    public int getAttack() {
+        return strength * currentWeapon.attackValue;
+    }
+
+    public int getDefense() {
+        return dexterity * currentShield.defenseValue;
     }
 
     public void getPlayerImage() {
@@ -117,7 +137,6 @@ public class Player extends Entity {
             }
 
             if (keyH.enterPressed && !attackCanceled) {
-                gp.playSFX(7);
                 attacking = true;
                 spriteCounter = 0;
             }
